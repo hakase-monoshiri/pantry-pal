@@ -1,8 +1,19 @@
 class Recipe
 
     @@all = []
-
     
+
+    # Adding all the attributes from the API recipe result, even though we won't use all of them
+    # This is to make importing easier, and keep the code from breaking if the API changes
+
+    #In case of API changes...
+    # recipe name ==  #label
+    # ingredient list == "ingredientLines"
+    # ingredient list with ingredients as objects == "ingredients"
+    # cook time = "totalTime"
+    # dietary restrictions info = "healthLabels"
+    # link to recipe = "url"
+
     def initialize(attributes)
         attributes.each do |key, value| 
             self.class.attr_accessor(key)
@@ -15,8 +26,32 @@ class Recipe
     end
     
 
-    def new_by_user
+    def self.new_by_user
         puts "What is the name of the Recipe?"
+        name = gets.chomp
+        puts "What are the ingredients? (Please enter as a comma separated list)"
+        ingredient_list = gets.chomp
+        puts "Do you want to add any dietary information? y/n?"
+        response = gets.chomp
+        if response == /y+/
+            puts "Please enter dietary info"
+            dietary = gets.chomp
+        end
+        puts "Do you want to add a cook time? y/n?"
+        response_2 = gets.chomp
+        if response == /y+/
+            puts "Please enter cook time"
+            cook_time = gets.chomp
+        end
+
+        attributes = {label: name, ingredientLines: ingredient_list, healthLabels: dietary, totalTime: cook_time}
+        new_recipe = Recipe.new(attributes)
+        new_recipe
+    end
+    
+
+
+
 
 
 end
