@@ -29,11 +29,11 @@ class RecipeImporter
         # dietary restrictions info = cat["hits"].first["recipe"]["healthLabels"]
         # link to recipe = cat["hits"].first["recipe"]["url"]
 
-        
+
     end
 
     def search_by_pantry
-
+        
     end
 
 

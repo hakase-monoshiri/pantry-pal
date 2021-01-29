@@ -33,22 +33,38 @@ class Recipe
         ingredient_list = gets.chomp
         puts "Do you want to add any dietary information? y/n?"
         response = gets.chomp
-        if response == /y+/
-            puts "Please enter dietary info"
-            dietary = gets.chomp
-        end
+            if response == /y+/
+                puts "Please enter dietary info"
+                dietary = gets.chomp
+            end
         puts "Do you want to add a cook time? y/n?"
         response_2 = gets.chomp
-        if response == /y+/
-            puts "Please enter cook time"
-            cook_time = gets.chomp
-        end
+            if response_2 == /y+/
+                puts "Please enter cook time"
+                cook_time = gets.chomp
+            end
+        puts "Do you want to add a link to the recipe? y/n?"
+        response_3 = gets.chomp
+            if response_3 == /y+/
+                puts "Please enter the full url link for this recipe"
+                link = gets.chomp
+            end
 
-        attributes = {label: name, ingredientLines: ingredient_list, healthLabels: dietary, totalTime: cook_time}
+        attributes = {label: name, ingredientLines: ingredient_list} 
+            if dietary
+                attributes[:healthLabels] = dietary
+            end
+            if cook_time 
+            attributes[:totalTime] = cook_time
+            end
+            if link
+            attributes[:url] = link}
+            end
+
         new_recipe = Recipe.new(attributes)
-        new_recipe
+        new_recipe.save_prompt
     end
-    
+
 
 
 
