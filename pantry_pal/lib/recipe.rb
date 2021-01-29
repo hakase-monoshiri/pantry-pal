@@ -15,7 +15,7 @@ class Recipe
     # link to recipe = "url"
 
     def initialize(attributes)
-        attributes.each do |key, value| 
+        attributes.each do |key, value|
             self.class.attr_accessor(key)
             self.send(("#{key}="), value)
         end
@@ -33,19 +33,19 @@ class Recipe
         ingredient_list = gets.chomp
         puts "Do you want to add any dietary information? y/n?"
         response = gets.chomp
-            if response == /y+/
+            if response == "y"
                 puts "Please enter dietary info"
                 dietary = gets.chomp
             end
         puts "Do you want to add a cook time? y/n?"
         response_2 = gets.chomp
-            if response_2 == /y+/
+            if response_2 == /y\S*/
                 puts "Please enter cook time"
                 cook_time = gets.chomp
             end
         puts "Do you want to add a link to the recipe? y/n?"
         response_3 = gets.chomp
-            if response_3 == /y+/
+            if response_3 == "y"
                 puts "Please enter the full url link for this recipe"
                 link = gets.chomp
             end
@@ -58,12 +58,13 @@ class Recipe
             attributes[:totalTime] = cook_time
             end
             if link
-            attributes[:url] = link}
+            attributes[:url] = link
             end
 
         new_recipe = Recipe.new(attributes)
-        new_recipe.save_prompt
+        new_recipe.save
     end
+
 
 
 
