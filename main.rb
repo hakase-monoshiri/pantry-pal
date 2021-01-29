@@ -6,7 +6,8 @@ app_id = "5bdd8311"
 
 app_key = "3b3ec8a2fd0299ae1205afac4d8f6fee"
 
-query = "chicken"
+puts "What would you like to search for?"
+query = gets.chomp.gsub(/\s*/,"-")
 
 url = "https://api.edamam.com/search?q=#{query}&app_id=#{app_id}&app_key=#{app_key}"
 
