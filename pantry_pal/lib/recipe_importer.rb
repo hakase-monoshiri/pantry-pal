@@ -4,19 +4,20 @@ require 'json'
 
 class RecipeImporter
 
-@@app_id = "5bdd8311"
-@@app_key = "3b3ec8a2fd0299ae1205afac4d8f6fee"
+    @@app_id = "5bdd8311"
+    @@app_key = "3b3ec8a2fd0299ae1205afac4d8f6fee"
 
-URL = "https://api.edamam.com/"
 
-attr_accessor :pantry, :results
+    URL = "https://api.edamam.com/"
 
-    def initialize(pantry)
+    attr_accessor :pantry, :results
+
+    def initialize(pantry = nil)
         @pantry = pantry
     end
 
 
-    def search
+    def search(query)
         url = URL + "search?q=#{query}&app_id=#{@@app_id}&app_key=#{@@app_key}"
 
         uri = URI.parse(url)
@@ -25,18 +26,36 @@ attr_accessor :pantry, :results
 
         json_object = JSON.parse(response.body)
 
-        self.results = json_object["hits"]
+        self.results = json_object["hits"].uniq
     end
+
+    def save_recipe(recipe_number)
+        interesting_recipe = self.results[recipe_number.to_i - 1]
+        new_recipe = Recipe.new(interesting_recipe)
+        new_recipe.save
+
+    end
+
+    def ask_user_to_save
+        puts "Which  would you like to save?"
+        number = gets.chomp
+        save_recipe(number)
+    end
+
 
     def list_results
         self.results.each do |result|
-           puts result["recipe"]["label"]
+            counter = 1
+           puts "#{counter}. result["recipe"]["label"]
            puts "Ingredients: #{result["recipe"]["ingredientLines"]}"
            puts "Dietary notes: #{result["recipe"]["healthLabels"]}"
            puts "Cook time: #{result["recipe"]["totalTime"]}"
            puts " for more information such as cooking directions and notes, look at the recipe online at #{result["recipe"]["url"]}"
            puts "--------------------"
+           counter += 1
         end
+        
+    end
            
 
 
@@ -45,8 +64,14 @@ attr_accessor :pantry, :results
     def search_by_user
         puts "What would you like to search for?"
         query = gets.chomp.gsub(/\s+/,"-")
-        search
+        search(query)
+        list_results
+        ask_user_to_save
     end
+
+
+
+
 
 
 
@@ -57,12 +82,7 @@ attr_accessor :pantry, :results
         # dietary restrictions info =["hits"].first["recipe"]["healthLabels"]
         # link to recipe =["hits"].first["recipe"]["url"]
 
-    def search_by_pantry
-        query = pantry.ingredients.to_s
-        search
-    end
 
-    end
 
 
 
