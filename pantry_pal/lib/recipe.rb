@@ -20,6 +20,8 @@ class Recipe
             self.send(("#{key}="), value)
         end
     end
+
+    
         
     def save
         @@all << self
