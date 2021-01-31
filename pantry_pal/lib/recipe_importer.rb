@@ -70,6 +70,8 @@ class RecipeImporter
     end
 
 
+    def search_by_pantry
+      ingredients = 
 
 
 
@@ -87,5 +89,3 @@ class RecipeImporter
 
 
 end
-
-RecipeImporter.new.search
