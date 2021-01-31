@@ -46,7 +46,7 @@ class RecipeImporter
     def list_results
         self.results.each do |result|
             counter = 1
-           puts "#{counter}. result["recipe"]["label"]
+           puts "#{counter}. #{result["recipe"]["label"]}"
            puts "Ingredients: #{result["recipe"]["ingredientLines"]}"
            puts "Dietary notes: #{result["recipe"]["healthLabels"]}"
            puts "Cook time: #{result["recipe"]["totalTime"]}"
@@ -70,8 +70,8 @@ class RecipeImporter
     end
 
 
-    def search_by_pantry
-      ingredients = 
+    def search_by_pantry(pantry)
+      ingredients = pantry.ingredients
 
 
 
@@ -83,6 +83,7 @@ class RecipeImporter
         # cook time =["hits"].first["recipe"]["totalTime"]
         # dietary restrictions info =["hits"].first["recipe"]["healthLabels"]
         # link to recipe =["hits"].first["recipe"]["url"]
+    end
 
 
 

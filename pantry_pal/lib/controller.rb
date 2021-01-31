@@ -10,7 +10,7 @@ class Controller
     puts "Please select a pantry"
     list pantries
     selection = gets.chomp.to_i
-    pantry = Pantry.all[selection - 1]
+    @pantry = Pantry.all[selection - 1]
   end
 
 end
