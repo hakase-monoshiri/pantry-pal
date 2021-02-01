@@ -7,7 +7,7 @@ class Recipe
     # This is to make importing easier, and keep the code from breaking if the API changes
 
     #In case of API changes...
-    # recipe name ==  #label
+    # recipe name ==  label
     # ingredient list == "ingredientLines"
     # ingredient list with ingredients as objects == "ingredients"
     # cook time = "totalTime"
@@ -35,7 +35,7 @@ class Recipe
         ingredient_list = gets.chomp
         puts "Do you want to add any dietary information? y/n?"
         response = gets.chomp
-            if response == "y"
+            if response == /y\S*/
                 puts "Please enter dietary info"
                 dietary = gets.chomp
             end
@@ -47,7 +47,7 @@ class Recipe
             end
         puts "Do you want to add a link to the recipe? y/n?"
         response_3 = gets.chomp
-            if response_3 == "y"
+            if response_3 == /y\S*/
                 puts "Please enter the full url link for this recipe"
                 link = gets.chomp
             end
@@ -65,6 +65,7 @@ class Recipe
 
         new_recipe = Recipe.new(attributes)
         new_recipe.save
+        new_recipe
     end
 
 

@@ -10,6 +10,7 @@ class Pantry
     #name is the name of the Pantry, to allow for multiple pantries/users
 
   def initialize
+    puts "Welcome to your Pantry"
   end
 
 

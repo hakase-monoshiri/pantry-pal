@@ -33,6 +33,7 @@ class RecipeImporter
         interesting_recipe = self.results[recipe_number.to_i - 1]
         new_recipe = Recipe.new(interesting_recipe)
         new_recipe.save
+        puts new_recipe.label
 
     end
 
@@ -52,7 +53,7 @@ class RecipeImporter
            puts "Cook time: #{result["recipe"]["totalTime"]}"
            puts " for more information such as cooking directions and notes, look at the recipe online at #{result["recipe"]["url"]}"
            puts "--------------------"
-           counter += 1
+           counter = counter + 1
         end
         
     end
