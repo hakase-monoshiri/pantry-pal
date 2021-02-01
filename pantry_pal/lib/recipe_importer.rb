@@ -12,7 +12,7 @@ class RecipeImporter
 
     attr_accessor :pantry, :results
 
-    def initialize(pantry = nil)
+    def initialize(pantry)
         @pantry = pantry
     end
 
@@ -31,29 +31,23 @@ class RecipeImporter
 
     def save_recipe(recipe_number)
         interesting_recipe = self.results[recipe_number.to_i - 1]
-        new_recipe = Recipe.new(interesting_recipe)
+        recipe_hash = interesting_recipe["recipe"]
+        new_recipe = Recipe.new(recipe_hash)
         new_recipe.save
         puts new_recipe.label
 
     end
 
-    def ask_user_to_save
-        puts "Which  would you like to save?"
-        number = gets.chomp
-        save_recipe(number)
-    end
 
 
     def list_results
         self.results.each do |result|
-            counter = 1
-           puts "#{counter}. #{result["recipe"]["label"]}"
+           puts "#{self.results.index(result) + 1}. #{result["recipe"]["label"]}"
            puts "Ingredients: #{result["recipe"]["ingredientLines"]}"
            puts "Dietary notes: #{result["recipe"]["healthLabels"]}"
            puts "Cook time: #{result["recipe"]["totalTime"]}"
            puts " for more information such as cooking directions and notes, look at the recipe online at #{result["recipe"]["url"]}"
            puts "--------------------"
-           counter = counter + 1
         end
         
     end
@@ -67,7 +61,14 @@ class RecipeImporter
         query = gets.chomp.gsub(/\s+/,"-")
         search(query)
         list_results
-        ask_user_to_save
+        puts "Which  would you like to save?"
+        puts "...or type 'back' to search again"
+        number = gets.chomp
+        if number == "back"
+            search_by_user
+        else
+            save_recipe(number)
+        end
     end
 
 

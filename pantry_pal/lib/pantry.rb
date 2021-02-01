@@ -1,6 +1,6 @@
 class Pantry
 
-  extend Listable
+  extend Listable::ClassMethods
 
   @@all = []
 
@@ -9,10 +9,17 @@ class Pantry
     #ingredients should be an array containing ingredient objects
     #name is the name of the Pantry, to allow for multiple pantries/users
 
-  def initialize
-    puts "Welcome to your Pantry"
+  def initialize(name)
+    puts "Welcome to your Pantry: #{name}"
+    @name = name
   end
 
+  def change_name_by_user
+    puts "What should the pantry name be?"
+    self.name = gets.chomp
+    puts "the new name is #{self.name}"
+  end
+  
 
   def add(ingredient)
     self.ingredients << ingredient
@@ -38,8 +45,8 @@ class Pantry
     @@all << self
   end
 
-  def self.create
-    new_pantry = Pantry.new
+  def self.create(name)
+    new_pantry = Pantry.new(name)
     new_pantry.save
   end
   
