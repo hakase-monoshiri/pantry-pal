@@ -1,11 +1,16 @@
 class Pantry
 
+  extend Listable
+
   @@all = []
 
   attr_accessor :ingredients, :name
 
     #ingredients should be an array containing ingredient objects
     #name is the name of the Pantry, to allow for multiple pantries/users
+
+  def initialize
+  end
 
 
   def add(ingredient)
@@ -26,6 +31,15 @@ class Pantry
 
   def self.all
     @@all
+  end
+
+  def save
+    @@all << self
+  end
+
+  def self.create
+    new_pantry = Pantry.new
+    new_pantry.save
   end
   
 
