@@ -11,9 +11,11 @@ class RecipeImporter
     URL = "https://api.edamam.com/"
 
     attr_accessor :pantry, :results
+    attr_reader :controller
 
-    def initialize(pantry)
+    def initialize(pantry, controller)
         @pantry = pantry
+        @controller = controller
     end
 
 
@@ -30,11 +32,15 @@ class RecipeImporter
     end
 
     def save_recipe(recipe_number)
-        interesting_recipe = self.results[recipe_number.to_i - 1]
-        recipe_hash = interesting_recipe["recipe"]
-        new_recipe = Recipe.new(recipe_hash)
-        new_recipe.save
-        puts new_recipe.label
+        if recipe_number.to_i <= self.results.size && recipe_number.to_i > 0
+            interesting_recipe = self.results[recipe_number.to_i - 1]
+            recipe_hash = interesting_recipe["recipe"]
+            new_recipe = Recipe.new(recipe_hash)
+            new_recipe.save
+            puts new_recipe.label
+        else
+            puts "that is not a valid recipe number, please try again"
+        end
 
     end
 
@@ -51,16 +57,21 @@ class RecipeImporter
         end
         
     end
-           
-
-
 
 
     def search_by_user
         puts "What would you like to search for?"
+        puts "...or type 'exit to return to the main menu"
         query = gets.chomp.gsub(/\s+/,"-")
+        if query == "exit"
+            controller.user_prompt
+        else
         search(query)
         list_results
+        end
+    end
+
+    def ask_user_to_save
         puts "Which  would you like to save?"
         puts "...or type 'back' to search again"
         number = gets.chomp
@@ -71,10 +82,18 @@ class RecipeImporter
         end
     end
 
-
-    def search_by_pantry(pantry)
-      ingredients = pantry.ingredients
-
+    def search_by_pantry
+      ingredients = self.pantry.ingredients
+      search(ingredients.join(" "))
+      list_results
+      puts "Which  would you like to save?"
+      puts "...or type 'back' to return to the main menu "
+      number = gets.chomp
+      if number == "back"
+        puts "returning to main menu"
+      else
+          save_recipe(number)
+      end
 
 
 

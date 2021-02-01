@@ -11,7 +11,10 @@ module Listable
   end
 
   module InstanceMethods
-    def list_items
+    def list_items(items)
+      self.items.each do |item|
+        puts item
+      end
     end
   end
 
