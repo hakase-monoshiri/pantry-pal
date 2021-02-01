@@ -22,6 +22,7 @@ class Controller
       elsif selection.to_i <= Pantry.all.size
         self.pantry = Pantry.all[selection.to_i - 1]
       end
+      puts "you are now using #{self.pantry.name}"
   
   end
 
@@ -35,6 +36,13 @@ class Controller
     case input
     when "1"
       self.pantry.change_name_by_user
+    when "2"
+      self.pantry.add_ingredients_by_user
+    when "3"
+      self.pantry.remove_ingredients_by_user
+    else
+      user_prompt
+    end
   end
 
 

@@ -3,7 +3,7 @@ module Listable
   module ClassMethods
 
     def list
-      self.all do |instance|
+      self.all.each do |instance|
         puts instance
       end
     end

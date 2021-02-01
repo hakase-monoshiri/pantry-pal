@@ -10,7 +10,6 @@ class Pantry
     #name is the name of the Pantry, to allow for multiple pantries/users
 
   def initialize(name)
-    puts "Welcome to your Pantry: #{name}"
     @name = name
   end
 
@@ -33,12 +32,26 @@ class Pantry
     end
   end
 
+  def add_ingredients_by_user
+    puts "What ingredients woulde you like to add?"
+  end
+
+  def remove_ingredients_by_user
+    puts "what ingredients would you like to remove?"
+  end
+
   def empty
     self.ingredients.clear
   end
 
   def self.all
     @@all
+  end
+
+  def self.list
+    self.all.each do |instance|
+      puts "#{self.all.index(instance) + 1}. #{instance.name}"
+    end
   end
 
   def save
@@ -48,6 +61,7 @@ class Pantry
   def self.create(name)
     new_pantry = Pantry.new(name)
     new_pantry.save
+    new_pantry
   end
   
 
