@@ -29,7 +29,11 @@ module Listable
     def save
       self.all << self
     end
-    
+
+    def remove
+      self.class.all.delete(self)
+    end
+
   end
 
 

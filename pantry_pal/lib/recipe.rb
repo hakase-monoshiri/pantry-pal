@@ -27,10 +27,6 @@ class Recipe
         @@all
     end
     
-    def remove
-        self.class.all.delete(self)
-    end
-    
 
     def self.new_by_user
         puts "What is the name of the Recipe?"

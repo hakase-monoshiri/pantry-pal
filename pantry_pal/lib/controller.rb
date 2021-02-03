@@ -2,9 +2,6 @@ class Controller
 
   attr_accessor :pantry, :importer, :shopping_list, :recipe
 
-  def list_pantries
-    Pantry.list("name")
-  end
 
   def initialize
     @shopping_list = ShoppingList.new(self)
@@ -12,23 +9,46 @@ class Controller
   end
 
   def choose_pantry
-    puts "--------------------"
-    puts "Please select a pantry using the pantry number"
-    list_pantries
-    puts "...or enter 'new' to create a new one!"
-    selection = gets.chomp
-      if selection == "new"
-        puts "Please make a name for your new pantry"
-        name = gets.chomp
-        self.pantry = Pantry.create(name)
-      elsif selection.to_i >0 && selection.to_i <= Pantry.all.size
-        self.pantry = Pantry.all[selection.to_i - 1]
-      else
-        puts "That is not a valid selection, please try again"
-        choose_pantry
-      end
-      puts "You are now using #{self.pantry.name}"
+  puts "--------------------"
+  puts "Please select a pantry using the pantry number"
+    Pantry.list("name")
+  puts "...or enter 'new' to create a new one!"
+  selection = gets.chomp
+    if selection == "new"
+      puts "Please make a name for your new pantry"
+      name = gets.chomp
+      self.pantry = Pantry.create(name)
+    elsif selection.to_i >0 && selection.to_i <= Pantry.all.size
+      self.pantry = Pantry.all[selection.to_i - 1]
+    else
+      puts "That is not a valid selection, please try again"
+      choose_pantry
+    end
   end
+
+
+  def swicth_remove_pantry
+    puts "Do you want to use this pantry? or delete it? [y/n]"
+    puts "1. Use this pantry"
+    puts "2. Delete this pantry (no undo)"
+    input = gets.chomp
+    case input
+    when "1"
+      puts "you are now using #{self.pantry.name}"
+      user_prompt
+    when "2"
+      puts "#{self.pantry.name} has been deleted"
+      self.pantry.remove
+      choose_pantry
+    else
+      puts "that is not a valid selection"
+      choose_pantry
+    end
+  end
+
+      
+      
+
 
   def manage_pantry
     puts "---------------------"
@@ -37,6 +57,7 @@ class Controller
     puts "2. List items in pantry"
     puts "3. Add indredients to pantry"
     puts "4. Remove ingredients from pantry"
+    puts "5. Delete or swap pantries"
     puts "...or type 'back' or 'exit' to return to the main menu."
     input = gets.chomp
     case input
@@ -51,6 +72,9 @@ class Controller
       manage_pantry
     when "4"
       self.pantry.remove_ingredients_by_user
+      manage_pantry
+    when "5"
+      swicth_remove_pantry
       manage_pantry
     when "back" 
       user_prompt
@@ -92,12 +116,71 @@ class Controller
   def manage_shopping_list
     puts "--------------------"
     puts "What would you like to do with your shopping list?"
-    puts "1. Create a new shopping list"
-    puts "2. Import recipe ingredients to a shopping list"
-    puts "3.  "
+    puts "1. View your shopping list"
+    puts "2. Create a new shopping list"
+    puts "3. Import recipe ingredients to a shopping list"
+    puts "4. Remove or Switch Shopping lists"
     puts "...or type 'back' to return to the main menu"
     input = gets.chomp
     case input
+    when "back"
+      user_prompt
+    when "1"
+      self.shopping_list.list_ingredients
+      manage_shopping_list
+    when "2"
+      self.shopping_list = ShoppingList.new_by_user(self)
+      manage_shopping_list
+    when "3"
+      self.shopping_list.add_ingredients_from_recipe
+      self.shopping_list.list_ingredients
+      manage_shopping_list
+    when "4"
+      swicth_remove_shopping_list
+      manage_shopping_list
+    else
+      puts "that is not a valid selection"
+      manage_shopping_list
+    end
+  end
+
+  def swicth_remove_shopping_list
+    puts "Do you want to use this shopping list? or delete it? [y/n]"
+    puts "1. Use this pantry"
+    puts "2. Delete this pantry (no undo)"
+    input = gets.chomp
+    case input
+    when "1"
+      puts "you are now using #{self.pantry.name}"
+      user_prompt
+    when "2"
+      puts "#{self.pantry.name} has been deleted"
+      self.pantry.remove
+      choose_pantry
+    else
+      puts "that is not a valid selection"
+      choose_pantry
+    end
+  end
+
+  def choose_shopping_list
+    puts "--------------------"
+    puts "Please select a shopping list using the list number"
+      ShoppingList.list("name")
+    puts "...or enter 'new' to create a new one!"
+    selection = gets.chomp
+      if selection == "new"
+        puts "Please make a name for your new pantry"
+        name = gets.chomp
+        self.pantry = Pantry.create(name)
+      elsif selection.to_i >0 && selection.to_i <= Pantry.all.size
+        self.pantry = Pantry.all[selection.to_i - 1]
+      else
+        puts "That is not a valid selection, please try again"
+        choose_pantry
+      end
+    end
+
 
   end
 

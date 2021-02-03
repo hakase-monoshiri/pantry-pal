@@ -66,9 +66,6 @@ class Pantry
     list_items("ingredients")
   end
 
-  def save
-    @@all << self
-  end
 
   def self.create(name)
     new_pantry = Pantry.new(name)
