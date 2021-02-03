@@ -1,7 +1,24 @@
 # PantryPal
-Pantry Pal is a CLI application that 
+Pantry Pal is a CLI application that manages a virtual "pantry", "shopping list" and "recipie list"
+
+Users can add or remove items from thier pantry either individually, or as a comma separated list of items.
+
+They can create recipes or search and save them from the Edamam API. 
+They can also search for unique recipies based on what already exists in thier pantry
+
+They also have a shopping list, which can be made manually, or the ingredients from a saved recipe can be imported directly to a shopping list.
+Furthermore, the shoppinglist will not import ingredients that are already in the pantry.
+
+*note: Because of the way Edamam API manages ingredients (it often includes the unit type and quantity as part of the ingredient name), 
+duplicate ingredients may appear in shopping lits, pantry and other places. 
+For this reason, this build stores ingredients as strings instead of ingredient objects
+(no point making a new class with a bunch of objects when the data it's built off of is flawed)
+While i could have used a different API (probably Spoonacular) i don't want to pay for it, or be limited to a really low call quota.
+So it is, what it is.
 
 
+
+The API used for recipe search functions in this gem is:
 https://developer.edamam.com/edamam-docs-recipe-api
 
 ## Installation

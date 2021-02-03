@@ -19,7 +19,9 @@ class ShoppingList
 
     def add_ingredients_from_recipe(recipe)
         ingredient_array =  recipe.ingredientLines
-        self.ingredients << ingredient_array
+        ingredient_array.each do |ingredient|
+            if controller.pantry.ingredients.include?(ingredient) == false
+                self.ingredients << ingredient
     end
 
     def add_to_list(ingredient)
