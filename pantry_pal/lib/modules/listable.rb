@@ -18,7 +18,7 @@ module Listable
 
     def list_items(items)
       if self.send(items).empty?
-        puts "0. There aren't any!"
+        puts "0. There aren't any #{self.class.name}(s)! "
       else
         self.send(items).each do |item|
           puts item

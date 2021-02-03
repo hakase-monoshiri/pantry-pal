@@ -52,7 +52,7 @@ class Pantry
     puts "What ingredients would you like to remove?"
     puts "remove ingredients as a comma separated list"
     input = gets.chomp.split(", ")
-    input.each {|ingredient| self.remove(ingredient)}
+    input.each {|ingredient| self.remove_ingredient(ingredient)}
   end
 
   def empty

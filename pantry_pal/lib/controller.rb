@@ -39,7 +39,7 @@ class Controller
       user_prompt
     when "2"
       puts "#{self.pantry.name} has been deleted"
-      self.pantry.remove
+      self.pantry.removeback
       choose_pantry
     else
       puts "that is not a valid selection"
