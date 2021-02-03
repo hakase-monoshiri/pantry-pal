@@ -22,6 +22,8 @@ class ShoppingList
         ingredient_array.each do |ingredient|
             if controller.pantry.ingredients.include?(ingredient) == false
                 self.ingredients << ingredient
+            end
+        end
     end
 
     def add_to_list(ingredient)
