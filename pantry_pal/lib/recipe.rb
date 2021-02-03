@@ -1,5 +1,7 @@
 class Recipe
 
+    extend Listable::ClassMethods
+
     @@all = []
     
 
@@ -21,10 +23,12 @@ class Recipe
         end
     end
 
+    def self.all
+        @@all
+    end
     
-        
-    def save
-        @@all << self
+    def remove
+        self.class.all.delete(self)
     end
     
 
@@ -67,6 +71,7 @@ class Recipe
         new_recipe.save
         new_recipe
     end
+
 
 
 

@@ -10,11 +10,10 @@ class RecipeImporter
 
     URL = "https://api.edamam.com/"
 
-    attr_accessor :pantry, :results
+    attr_accessor :results
     attr_reader :controller
 
-    def initialize(pantry, controller)
-        @pantry = pantry
+    def initialize(controller)
         @controller = controller
     end
 
@@ -83,8 +82,8 @@ class RecipeImporter
     end
 
     def search_by_pantry
-      ingredients = self.pantry.ingredients
-      search(ingredients.join(" "))
+      ingredients = self.controller.pantry.ingredients
+      search(ingredients.sample(4).join(" "))
       list_results
       puts "Which  would you like to save?"
       puts "...or type 'back' to return to the main menu "

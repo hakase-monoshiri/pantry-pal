@@ -1,6 +1,7 @@
 class Pantry
 
   extend Listable::ClassMethods
+  include Listable::InstanceMethods
 
   @@all = []
 
@@ -61,16 +62,8 @@ class Pantry
     @@all
   end
 
-  def self.list
-    self.all.each do |instance|
-      puts "#{self.all.index(instance) + 1}. #{instance.name}"
-    end
-  end
-
   def list_ingredients
-    self.ingredients.each do |ingredient|
-      puts ingredient
-    end
+    list_items("ingredients")
   end
 
   def save

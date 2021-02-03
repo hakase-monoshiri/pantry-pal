@@ -2,20 +2,34 @@ module Listable
   
   module ClassMethods
 
-    def list
-      self.all.each do |instance|
-        puts instance
+    def list(parameter)
+      if self.all.empty?
+        puts "0. There aren't any!"
+      else
+        self.all.each do |instance|
+          puts "#{self.all.index(instance) + 1}. #{instance.send(parameter)}"
+        end
       end
     end
 
   end
 
   module InstanceMethods
+
     def list_items(items)
-      self.items.each do |item|
-        puts item
+      if self.send(items).empty?
+        puts "0. There aren't any!"
+      else
+        self.send(items).each do |item|
+          puts item
+        end
       end
     end
+
+    def save
+      self.all << self
+    end
+    
   end
 
 
