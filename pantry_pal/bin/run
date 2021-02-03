@@ -2,6 +2,8 @@
 
 require_relative "../config/environment.rb"
 
+
+puts "Welcome to Pantry Pal"
 controller = Controller.new
 
 controller.user_prompt

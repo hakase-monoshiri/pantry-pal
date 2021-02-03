@@ -27,7 +27,7 @@ module Listable
     end
 
     def save
-      self.all << self
+      self.class.all << self
     end
 
     def remove

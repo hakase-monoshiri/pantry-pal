@@ -18,11 +18,12 @@ class Controller
       puts "Please make a name for your new pantry"
       name = gets.chomp
       self.pantry = Pantry.create(name)
+      puts "you are now using #{self.pantry.name}"
     elsif selection.to_i >0 && selection.to_i <= Pantry.all.size
       self.pantry = Pantry.all[selection.to_i - 1]
     else
       puts "That is not a valid selection, please try again"
-      choose_pantry
+      choose_pantry5
     end
   end
 
@@ -146,43 +147,42 @@ class Controller
 
   def swicth_remove_shopping_list
     puts "Do you want to use this shopping list? or delete it? [y/n]"
-    puts "1. Use this pantry"
-    puts "2. Delete this pantry (no undo)"
+    puts "1. Use this shopping list"
+    puts "2. Delete this shopping list (no undo)"
     input = gets.chomp
     case input
     when "1"
-      puts "you are now using #{self.pantry.name}"
+      puts "you are now using #{self.shopping_list.name}"
       user_prompt
     when "2"
-      puts "#{self.pantry.name} has been deleted"
-      self.pantry.remove
-      choose_pantry
+      puts "#{self.shopping_list.name} has been deleted"
+      self.shopping_list.remove
+      choose_shopping_list
     else
       puts "that is not a valid selection"
-      choose_pantry
+      choose_shopping_list
     end
   end
 
   def choose_shopping_list
-    puts "--------------------"
-    puts "Please select a shopping list using the list number"
-      ShoppingList.list("name")
-    puts "...or enter 'new' to create a new one!"
-    selection = gets.chomp
-      if selection == "new"
-        puts "Please make a name for your new pantry"
-        name = gets.chomp
-        self.pantry = Pantry.create(name)
-      elsif selection.to_i >0 && selection.to_i <= Pantry.all.size
-        self.pantry = Pantry.all[selection.to_i - 1]
-      else
-        puts "That is not a valid selection, please try again"
-        choose_pantry
-      end
+  puts "--------------------"
+  puts "Please select a shopping list using the list number"
+    ShoppingList.list("name")
+  puts "...or enter 'new' to create a new one!"
+  selection = gets.chomp
+    if selection == "new"
+      self.shopping_list = ShoppingList.new_by_user(self)
+      manage_shopping_list
+    elsif selection.to_i >0 && selection.to_i <= ShoppingList.all.size
+      self.shopping_list = ShoppingList.all[selection.to_i - 1]
+    else
+      puts "That is not a valid selection, please try again"
+      choose_shopping_list
     end
-
-
   end
+
+
+  
 
   def manage_recipes
     puts "--------------------"

@@ -10,7 +10,7 @@ class ShoppingList
 
     def initialize(controller)
         @controller = controller
-        @indredients = []
+        @ingredients = []
     end
 
     def all
@@ -19,15 +19,15 @@ class ShoppingList
 
     def add_ingredients_from_recipe(recipe)
         ingredient_array =  recipe.ingredientLines.split(", ")
-        self.ingedienst << ingredient_array
+        self.ingredients << ingredient_array
     end
 
     def add_to_list(ingredient)
-        self.indredients << ingredient
+        self.ingredients << ingredient
     end
 
     def list_ingredients
-        list_items(indredients)
+        list_items("ingredients")
     end
 
     def self.new_by_user(controller)
