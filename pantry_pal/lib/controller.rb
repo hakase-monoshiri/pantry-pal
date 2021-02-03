@@ -1,6 +1,6 @@
 class Controller
 
-  attr_accessor :pantry, :importer, :shopping_list, :recipe
+  attr_accessor :pantry, :importer, :shopping_list
 
 
   def initialize
@@ -94,6 +94,7 @@ class Controller
 
 
   def recipe_search
+    import_greeting
     puts "Type '1' to manually search for recipes."
     puts "Type '2' to find recipies based on what's in your pantry. (randomly picks ingredients and finds recipies)"
     input = gets.chomp
@@ -112,6 +113,25 @@ class Controller
   def goodbye
     puts "Thank you for using Pantry Pal!"
     exit
+  end
+
+  def find_or_seacrh_import_r_to_sl
+    puts "Which recipe number would you like to import?"
+    puts "...or type 'search' to find a new one!"
+    Recipe.list("label")
+    input = gets.chomp
+    if input == "search"
+      recipe_search
+      find_or_seacrh_import_r_to_sl
+    elsif input.to_i >0 && input.to_i <= Recipe.all.size
+      this_recipe = Recipe.all[input.to_i - 1]
+      self.shopping_list.add_ingredients_from_recipe(this_recipe)
+      self.shopping_list.list_ingredients
+      manage_shopping_list
+    else
+      puts "that is not a valid selection"
+      manage_shopping_list
+    end
   end
 
   def manage_shopping_list
@@ -133,8 +153,7 @@ class Controller
       self.shopping_list = ShoppingList.new_by_user(self)
       manage_shopping_list
     when "3"
-      self.shopping_list.add_ingredients_from_recipe
-      self.shopping_list.list_ingredients
+      find_or_seacrh_import_r_to_sl
       manage_shopping_list
     when "4"
       swicth_remove_shopping_list
@@ -146,21 +165,24 @@ class Controller
   end
 
   def swicth_remove_shopping_list
-    puts "Do you want to use this shopping list? or delete it? [y/n]"
+    puts "Do you want to use this shopping list? or delete it?"
     puts "1. Use this shopping list"
-    puts "2. Delete this shopping list (no undo)"
+    puts "2. Switch shopping list"
+    puts "3. Delete this shopping list (no undo)"
     input = gets.chomp
     case input
     when "1"
       puts "you are now using #{self.shopping_list.name}"
       user_prompt
     when "2"
+      choose_shopping_list
+    when "3"
       puts "#{self.shopping_list.name} has been deleted"
       self.shopping_list.remove
       choose_shopping_list
     else
       puts "that is not a valid selection"
-      choose_shopping_list
+      swicth_remove_shopping_listpeanuts
     end
   end
 
@@ -175,6 +197,7 @@ class Controller
       manage_shopping_list
     elsif selection.to_i >0 && selection.to_i <= ShoppingList.all.size
       self.shopping_list = ShoppingList.all[selection.to_i - 1]
+      puts "you are now using #{self.shopping_list.name}"
     else
       puts "That is not a valid selection, please try again"
       choose_shopping_list
@@ -227,7 +250,6 @@ class Controller
     input = gets.chomp
     case input
       when "1"
-        import_greeting
         recipe_search
         user_prompt
       when "2"

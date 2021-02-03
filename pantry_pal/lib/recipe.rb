@@ -1,6 +1,7 @@
 class Recipe
 
     extend Listable::ClassMethods
+    include Listable::InstanceMethods
 
     @@all = []
     

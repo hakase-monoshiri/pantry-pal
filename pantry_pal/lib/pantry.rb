@@ -32,11 +32,12 @@ class Pantry
     end
   end
 
-  def remove(ingredient)
+  def remove_ingredient(ingredient)
     if self.ingredients.include?(ingredient)
       self.ingredients.delete(ingredient)
+      puts "removed #{ingredient.to_s}"
     else
-      puts "That item is not in your pantry."
+      puts "#{ingredient.to_s} was not in your pantry."
     end
   end
 
@@ -50,8 +51,8 @@ class Pantry
   def remove_ingredients_by_user
     puts "What ingredients would you like to remove?"
     puts "remove ingredients as a comma separated list"
-    input = gets.chomp
-    self.remove(input.split(", "))
+    input = gets.chomp.split(", ")
+    input.each {|ingredient| self.remove(ingredient)}
   end
 
   def empty

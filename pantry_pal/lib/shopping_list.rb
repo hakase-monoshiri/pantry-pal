@@ -13,12 +13,12 @@ class ShoppingList
         @ingredients = []
     end
 
-    def all
+    def self.all
         @@all
     end
 
     def add_ingredients_from_recipe(recipe)
-        ingredient_array =  recipe.ingredientLines.split(", ")
+        ingredient_array =  recipe.ingredientLines
         self.ingredients << ingredient_array
     end
 

@@ -2,6 +2,14 @@ require "open-uri"
 require 'net/http'
 require 'json'
 
+
+# recipe name =["hits"].first["recipe"]["label"]
+# ingredient list simple =["hits"].first["recipe"]["ingredientLines"]
+# ingredient list with ingredients as obj["hits"].first["recipe"]["ingredientLines"]
+# cook time =["hits"].first["recipe"]["totalTime"]
+# dietary restrictions info =["hits"].first["recipe"]["healthLabels"]
+# link to recipe =["hits"].first["recipe"]["url"]
+
 class RecipeImporter
 
     @@app_id = "5bdd8311"
@@ -82,27 +90,22 @@ class RecipeImporter
     end
 
     def search_by_pantry
-      ingredients = self.controller.pantry.ingredients
-      search(ingredients.sample(4).join(" "))
-      list_results
-      puts "Which  would you like to save?"
-      puts "...or type 'back' to return to the main menu "
-      number = gets.chomp
-      if number == "back"
-        puts "returning to main menu"
-      else
-          save_recipe(number)
-      end
-
-
-
-
-        # recipe name =["hits"].first["recipe"]["label"]
-        # ingredient list simple =["hits"].first["recipe"]["ingredientLines"]
-        # ingredient list with ingredients as obj["hits"].first["recipe"]["ingredientLines"]
-        # cook time =["hits"].first["recipe"]["totalTime"]
-        # dietary restrictions info =["hits"].first["recipe"]["healthLabels"]
-        # link to recipe =["hits"].first["recipe"]["url"]
+        if self.controller.pantry.ingredients.empty?
+            puts "There are no items in the pantry!"
+        else
+            ingredients = self.controller.pantry.ingredients
+            search(ingredients.sample(4).join(" "))
+            list_results
+            puts "Which  would you like to save?"
+            puts "...or type 'back' to return to the main menu "
+            number = gets.chomp
+            if number == "back"
+                puts "returning to main menu"
+            else
+                save_recipe(number)
+            end
+        end
+      
     end
 
 
