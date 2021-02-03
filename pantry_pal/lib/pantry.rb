@@ -23,7 +23,7 @@ class Pantry
   
 
   def add(ingredients)
-    self.ingredients << ingredients
+    ingredients.each{|ingredient| self.ingredients << ingredient}
   end
   
   def import_ingredients(comma_separated_list)

@@ -47,6 +47,13 @@ class RecipeImporter
             puts new_recipe.label
         else
             puts "that is not a valid recipe number, please try again"
+            puts "or type 'back to return to the main menu"
+            input = gets.chomp
+            if /b\S*/ === input
+                user_prompt
+            else
+            save_recipe
+            end
         end
 
     end
@@ -93,8 +100,9 @@ class RecipeImporter
         if self.controller.pantry.ingredients.empty?
             puts "There are no items in the pantry!"
         else
-            ingredients = self.controller.pantry.ingredients
-            search(ingredients.sample(4).join(" "))
+            ingredients = self.controller.pantry.ingredients.sample(3).join("-")
+            binding.pry
+            search(ingredients)
             list_results
             puts "Which  would you like to save?"
             puts "...or type 'back' to return to the main menu "

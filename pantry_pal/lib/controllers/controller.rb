@@ -2,7 +2,6 @@ class Controller
 
   attr_accessor :pantry, :importer, :shopping_list
 
-
   def initialize
     @shopping_list = ShoppingList.new(self)
     choose_pantry
@@ -23,12 +22,12 @@ class Controller
       self.pantry = Pantry.all[selection.to_i - 1]
     else
       puts "That is not a valid selection, please try again"
-      choose_pantry5
+      choose_pantry
     end
   end
 
 
-  def swicth_remove_pantry
+  def switch_remove_pantry
     puts "Do you want to use this pantry? or delete it? [y/n]"
     puts "1. Use this pantry"
     puts "2. Delete this pantry (no undo)"
@@ -39,7 +38,7 @@ class Controller
       user_prompt
     when "2"
       puts "#{self.pantry.name} has been deleted"
-      self.pantry.removeback
+      self.pantry.remove
       choose_pantry
     else
       puts "that is not a valid selection"
@@ -47,44 +46,6 @@ class Controller
     end
   end
 
-      
-      
-
-
-  def manage_pantry
-    puts "---------------------"
-    puts "What would you like to do?"
-    puts "1. Change pantry name"
-    puts "2. List items in pantry"
-    puts "3. Add indredients to pantry"
-    puts "4. Remove ingredients from pantry"
-    puts "5. Delete or swap pantries"
-    puts "...or type 'back' or 'exit' to return to the main menu."
-    input = gets.chomp
-    case input
-    when "1"
-      self.pantry.change_name_by_user
-      manage_pantry
-    when "2"
-      self.pantry.list_ingredients
-      manage_pantry
-    when "3"
-      self.pantry.add_ingredients_by_user
-      manage_pantry
-    when "4"
-      self.pantry.remove_ingredients_by_user
-      manage_pantry
-    when "5"
-      swicth_remove_pantry
-      manage_pantry
-    when "back" 
-      user_prompt
-    when "exit"
-      user_prompt
-    else
-      manage_pantry
-    end
-  end
 
 
   def import_greeting
@@ -97,13 +58,16 @@ class Controller
     import_greeting
     puts "Type '1' to manually search for recipes."
     puts "Type '2' to find recipies based on what's in your pantry. (randomly picks ingredients and finds recipies)"
+    puts "...or type 'back' to return to the recipe manager"
     input = gets.chomp
     case input
-      when "1"
+      when /1\D*/
         self.importer.search_by_user
         self.importer.ask_user_to_save
-      when "2"
+      when /2\D*/
         self.importer.search_by_pantry
+      when /b\S*/
+        manage_recipes
       else
         puts "That is not a valid selection"
         recipe_search
@@ -134,6 +98,41 @@ class Controller
     end
   end
 
+  def manage_pantry
+    puts "---------------------"
+    puts "What would you like to do?"
+    puts "1. Change pantry name"
+    puts "2. List items in pantry"
+    puts "3. Add indredients to pantry"
+    puts "4. Remove ingredients from pantry"
+    puts "5. Delete or swap pantries"
+    puts "...or type 'back' or 'exit' to return to the main menu."
+    input = gets.chomp
+    case input
+    when "1"
+      self.pantry.change_name_by_user
+      manage_pantry
+    when "2"
+      self.pantry.list_ingredients
+      manage_pantry
+    when "3"
+      self.pantry.add_ingredients_by_user
+      manage_pantry
+    when "4"
+      self.pantry.remove_ingredients_by_user
+      manage_pantry
+    when "5"
+      switch_remove_pantry
+      manage_pantry
+    when /b\S*/ 
+      user_prompt
+    when "exit"
+      user_prompt
+    else
+      manage_pantry
+    end
+  end
+
   def manage_shopping_list
     puts "--------------------"
     puts "What would you like to do with your shopping list?"
@@ -144,7 +143,7 @@ class Controller
     puts "...or type 'back' to return to the main menu"
     input = gets.chomp
     case input
-    when "back"
+    when /b\S*/
       user_prompt
     when "1"
       self.shopping_list.list_ingredients
@@ -216,13 +215,13 @@ class Controller
     puts "...or type 'back' to return to the main menu"
     input = gets.chomp
     case input
-    when "1"
-      Recipe.new_by_user
+    when /1\D*/
+      recipe_make_controller
       manage_recipes
-    when "2"
+    when /2\D*/
       Recipe.list("label")
       manage_recipes
-    when "3"
+    when /3\D*/
       puts "Which recipe number would you like to remove?"
       Recipe.list("label")
       input = gets.chomp
@@ -231,11 +230,25 @@ class Controller
     when "back"
       user_prompt
     else
-      puts "that is not a valid selection"
+      puts "that is not a valid selection."
       manage_recipes
     end
   end
 
+  def recipe_make_controller
+    puts "Would you like to search, or manually input a recipe?"
+    puts "1. Search for a recipe"
+    puts "2. Manually make a recipe"
+    input = gets.chomp
+    case input
+    when /1\D*/
+      recipe_search
+    when /2\D*/
+      Recipe.new_by_user
+    else 
+      puts "that is not a valid selection."
+    end
+  end
 
 
   def user_prompt
@@ -249,19 +262,19 @@ class Controller
     puts "...or type 'exit' to leave the app."
     input = gets.chomp
     case input
-      when "1"
+      when /1\D*/
         recipe_search
         user_prompt
-      when "2"
+      when /2\D*/
         manage_recipes
         user_prompt
-      when "3"
+      when /3\D*/
         manage_pantry
         user_prompt
-      when "4"
+      when /4\D*/
         choose_pantry
         user_prompt
-      when "5"
+      when /5\D*/
         manage_shopping_list
         user_prompt
       when "exit"
