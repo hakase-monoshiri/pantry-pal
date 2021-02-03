@@ -50,6 +50,7 @@ class Controller
 
   def import_greeting
     self.importer = RecipeImporter.new(self)
+    puts "--------------------"
     puts "Time to search for a new recipe!"
   end
 
@@ -75,11 +76,13 @@ class Controller
   end 
 
   def goodbye
+    puts "------------------------------"
     puts "Thank you for using Pantry Pal!"
     exit
   end
 
   def find_or_seacrh_import_r_to_sl
+    puts "------------------------------"
     puts "Which recipe number would you like to import?"
     puts "...or type 'search' to find a new one!"
     Recipe.list("label")
@@ -99,7 +102,7 @@ class Controller
   end
 
   def manage_pantry
-    puts "---------------------"
+    puts "------------------------------"
     puts "What would you like to do?"
     puts "1. Change pantry name"
     puts "2. List items in pantry"
@@ -134,7 +137,7 @@ class Controller
   end
 
   def manage_shopping_list
-    puts "--------------------"
+    puts "------------------------------"
     puts "What would you like to do with your shopping list?"
     puts "1. View your shopping list"
     puts "2. Create a new shopping list"
@@ -164,6 +167,7 @@ class Controller
   end
 
   def swicth_remove_shopping_list
+    puts "------------------------------"
     puts "Do you want to use this shopping list? or delete it?"
     puts "1. Use this shopping list"
     puts "2. Switch shopping list"
@@ -186,7 +190,7 @@ class Controller
   end
 
   def choose_shopping_list
-  puts "--------------------"
+  puts "------------------------------"
   puts "Please select a shopping list using the list number"
     ShoppingList.list("name")
   puts "...or enter 'new' to create a new one!"
@@ -207,7 +211,7 @@ class Controller
   
 
   def manage_recipes
-    puts "--------------------"
+    puts "------------------------------"
     puts "What would you like to do with your recipes?"
     puts "1. Create a new recipie"
     puts "2. View saved recipes"
@@ -236,6 +240,7 @@ class Controller
   end
 
   def recipe_make_controller
+    puts "------------------------------"
     puts "Would you like to search, or manually input a recipe?"
     puts "1. Search for a recipe"
     puts "2. Manually make a recipe"
@@ -252,7 +257,7 @@ class Controller
 
 
   def user_prompt
-    puts "--------------------"
+    puts "------------------------------"
     puts "What would you like to do next?"
     puts "1. Search for a recipe."
     puts "2. Manage your recipes"
