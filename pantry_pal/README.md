@@ -17,10 +17,6 @@ While i could have used a different API (probably Spoonacular) i don't want to p
 So it is, what it is.
 
 
-
-The API used for recipe search functions in this gem is:
-https://developer.edamam.com/edamam-docs-recipe-api
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -39,7 +35,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To use the app, 
 
 ## Development
 
@@ -53,6 +49,9 @@ If the recipe search function breaks, check the API doccumentaion at https://dev
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/pantry_pal. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/pantry_pal/blob/master/CODE_OF_CONDUCT.md).
+
+The API used for recipe search functions in this gem is:
+https://developer.edamam.com/edamam-docs-recipe-api
 
 ## License
 
