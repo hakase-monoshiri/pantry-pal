@@ -101,7 +101,6 @@ class RecipeImporter
             puts "There are no items in the pantry!"
         else
             ingredients = self.controller.pantry.ingredients.sample(3).join("-")
-            binding.pry
             search(ingredients)
             list_results
             puts "Which  would you like to save?"
