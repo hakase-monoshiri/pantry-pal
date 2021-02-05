@@ -2,6 +2,7 @@ require "open-uri"
 require 'net/http'
 require 'json'
 
+require_relative "../config/api_keys.rb"
 
 # recipe name =["hits"].first["recipe"]["label"]
 # ingredient list simple =["hits"].first["recipe"]["ingredientLines"]
@@ -12,8 +13,8 @@ require 'json'
 
 class RecipeImporter
 
-    @@app_id = "5bdd8311"
-    @@app_key = "3b3ec8a2fd0299ae1205afac4d8f6fee"
+    @@app_id = ApiKeys.id
+    @@app_key = ApiKeys.key
 
 
     URL = "https://api.edamam.com/"
