@@ -13,8 +13,8 @@ require_relative "../config/api_keys.rb"
 
 class RecipeImporter
 
-    @@app_id = ApiKeys.id
-    @@app_key = ApiKeys.key
+    @@app_id = ApiKeys.id #if you want to use the seach function, go and get your own key and Id
+    @@app_key = ApiKeys.key #mine are hidden in a seperate class
 
 
     URL = "https://api.edamam.com/"
