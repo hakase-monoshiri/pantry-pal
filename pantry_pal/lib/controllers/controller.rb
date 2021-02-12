@@ -7,6 +7,9 @@ class Controller
     choose_pantry
   end
 
+
+  # This class is huge, because it handles all the CLI work for several menus.
+  ## Will go back later and organize into sections for main menu, pantry management, recipe management recipe search, and shopping list management.
   def choose_pantry
   puts "--------------------"
   puts "Please select a pantry using the pantry number"
