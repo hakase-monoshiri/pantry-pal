@@ -31,6 +31,12 @@ module Listable
       self
     end
 
+    def update
+      if self.class.all.include?(self) == false
+        save
+      end
+    end
+      
     def remove
       self.class.all.delete(self)
     end

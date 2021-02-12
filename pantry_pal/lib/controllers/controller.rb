@@ -135,7 +135,7 @@ end
     if query == "exit"
         controller.user_prompt
     else
-    search(query)
+    importer.search(query)
     list_results
     end
   end
@@ -190,6 +190,7 @@ end
       this_recipe = Recipe.all[input.to_i - 1]
       self.shopping_list.add_ingredients_from_recipe(this_recipe)
       self.shopping_list.list_ingredients
+      self.shopping_list.update
       manage_shopping_list
     else
       puts "that is not a valid selection"
