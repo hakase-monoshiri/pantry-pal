@@ -15,12 +15,6 @@ class Pantry
     @ingredients = []
   end
 
-  # def change_name_by_user
-  #   puts "What should the pantry name be?"
-  #   pantry.name = gets.chomp
-  #   puts "the new name is #{pantry.name}"
-  # end
-  
 
   def add(ingredients)
     ingredients.each{|ingredient| self.ingredients << ingredient}
@@ -37,20 +31,6 @@ class Pantry
       self.ingredients.delete(ingredient)
     end
   end
-
-  # def add_ingredients_by_user
-  #   puts "What ingredients would you like to add?"
-  #   puts "(add ingredients as a comma separated list)"
-  #   input = gets.chomp
-  #   pantry.add(input.split(", "))
-  # end
-
-  # def remove_ingredients_by_user
-  #   puts "What ingredients would you like to remove?"
-  #   puts "remove ingredients as a comma separated list"
-  #   input = gets.chomp.split(", ")
-  #   input.each {|ingredient| self.remove_ingredient(ingredient)}
-  # end
 
   def empty
     self.ingredients.clear

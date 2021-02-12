@@ -133,7 +133,7 @@ end
     puts "...or type 'exit to return to the main menu"
     query = gets.chomp.gsub(/\s+/,"-")
     if query == "exit"
-        controller.user_prompt
+        user_prompt
     else
     importer.search(query)
     list_results
