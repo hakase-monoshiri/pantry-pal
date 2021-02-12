@@ -34,14 +34,14 @@ class ShoppingList
         list_items("ingredients")
     end
 
-    def self.new_by_user(controller)
-        new_list = ShoppingList.new(controller)
-        puts "What is the name of the Shopping List?"
-        new_list.name = gets.chomp
-        puts "What are the ingredients you want to buy? (Please enter as a comma separated list)"
-        new_list.ingredients = gets.chomp.split(", ")
-        new_list.save
-        new_list
-    end
+    # def self.new_by_user(controller)
+    #     new_list = ShoppingList.new(controller)
+    #     puts "What is the name of the Shopping List?"
+    #     new_list.name = gets.chomp
+    #     puts "What are the ingredients you want to buy? (Please enter as a comma separated list)"
+    #     new_list.ingredients = gets.chomp.split(", ")
+    #     new_list.save
+    #     new_list
+    # end
 
 end

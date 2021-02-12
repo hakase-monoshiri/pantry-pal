@@ -20,6 +20,7 @@ class Controller
       puts "you are now using #{self.pantry.name}"
     elsif selection.to_i >0 && selection.to_i <= Pantry.all.size
       self.pantry = Pantry.all[selection.to_i - 1]
+      puts "you are now using #{self.pantry.name}"
     else
       puts "That is not a valid selection, please try again"
       choose_pantry
@@ -104,10 +105,10 @@ end
     input = gets.chomp
     case input
       when /1\D*/
-        self.importer.search_by_user
-        self.importer.ask_user_to_save
+        search_by_user
+        ask_user_to_save
       when /2\D*/
-        self.importer.search_by_pantry
+        search_by_pantry
       when /b\S*/
         manage_recipes
       else
@@ -115,6 +116,60 @@ end
         recipe_search
     end
   end 
+
+  def list_results
+    importer.results.each do |result|
+       puts "#{importer.results.index(result) + 1}. #{result["recipe"]["label"]}"
+       puts "Ingredients: #{result["recipe"]["ingredientLines"]}"
+       puts "Dietary notes: #{result["recipe"]["healthLabels"]}"
+       puts "Cook time: #{result["recipe"]["totalTime"]}"
+       puts " for more information such as cooking directions and notes, look at the recipe online at #{result["recipe"]["url"]}"
+       puts "--------------------"
+    end
+  end
+    
+  def search_by_user
+    puts "What would you like to search for?"
+    puts "...or type 'exit to return to the main menu"
+    query = gets.chomp.gsub(/\s+/,"-")
+    if query == "exit"
+        controller.user_prompt
+    else
+    search(query)
+    list_results
+    end
+  end
+
+  def save_recipe(recipe_number)
+    if recipe_number.to_i <= importer.results.size && recipe_number.to_i > 0
+        interesting_recipe = importer.results[recipe_number.to_i - 1]
+        recipe_hash = interesting_recipe["recipe"]
+        new_recipe = Recipe.new(recipe_hash)
+        new_recipe.save
+        puts new_recipe.label
+    else
+        puts "that is not a valid recipe number, please try again"
+        puts "or type 'back to return to the main menu"
+        input = gets.chomp
+        if /b\S*/ === input
+            user_prompt
+        else
+        save_recipe
+        end
+    end
+  end
+
+  def ask_user_to_save
+    puts "Which  would you like to save?"
+    puts "...or type 'back' to search again"
+    number = gets.chomp
+    if number == "back"
+        search_by_user
+    else
+        save_recipe(number)
+    end
+  end
+
 
   def goodbye
     puts "------------------------------"
@@ -169,6 +224,35 @@ end
     pantry.add(input.split(", "))
   end
 
+
+  def search_by_pantry
+    if pantry.ingredients.empty?
+        puts "There are no items in the pantry!"
+    else
+        ingredients = pantry.ingredients.sample(3).join("-")
+        importer.search(ingredients)
+        list_results
+        puts "Which  would you like to save?"
+        puts "...or type 'back' to return to the main menu "
+        number = gets.chomp
+        if number == "back"
+            puts "returning to main menu"
+        else
+            save_recipe(number)
+        end
+    end
+  end
+
+  def new_shopping_list_by_user
+    new_list = ShoppingList.new(self)
+    puts "What is the name of the Shopping List?"
+    new_list.name = gets.chomp
+    puts "What are the ingredients you want to buy? (Please enter as a comma separated list)"
+    new_list.ingredients = gets.chomp.split(", ")
+    new_list.save
+    new_list
+  end
+
   def manage_pantry
     puts "------------------------------"
     puts "What would you like to do?"
@@ -220,7 +304,7 @@ end
       self.shopping_list.list_ingredients
       manage_shopping_list
     when "2"
-      self.shopping_list = ShoppingList.new_by_user(self)
+      self.shopping_list = new_shopping_list_by_user
       manage_shopping_list
     when "3"
       find_or_seacrh_import_r_to_sl
@@ -264,7 +348,7 @@ end
   puts "...or enter 'new' to create a new one!"
   selection = gets.chomp
     if selection == "new"
-      self.shopping_list = ShoppingList.new_by_user(self)
+      self.shopping_list = new_shopping_list_by_user
       manage_shopping_list
     elsif selection.to_i >0 && selection.to_i <= ShoppingList.all.size
       self.shopping_list = ShoppingList.all[selection.to_i - 1]

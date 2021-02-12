@@ -4,7 +4,7 @@ module Listable
 
     def list(parameter)
       if self.all.empty?
-        puts "0. There aren't any!"
+        puts "0. There aren't any #{self.name}(s)!"
       else
         self.all.each do |instance|
           puts "#{self.all.index(instance) + 1}. #{instance.send(parameter)}"
@@ -18,7 +18,7 @@ module Listable
 
     def list_items(items)
       if self.send(items).empty?
-        puts "0. There aren't any #{self.class.name}(s)! "
+        puts "0. There aren't any #{items.to_s}(s)! "
       else
         self.send(items).each do |item|
           puts item
