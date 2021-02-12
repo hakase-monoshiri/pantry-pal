@@ -29,45 +29,45 @@ class Recipe
     end
     
 
-    def self.new_by_user
-        puts "What is the name of the Recipe?"
-        name = gets.chomp
-        puts "What are the ingredients? (Please enter as a comma separated list)"
-        ingredient_list = gets.chomp
-        puts "Do you want to add any dietary information? y/n?"
-        response = gets.chomp
-            if /y\S*/ === response
-                puts "Please enter dietary info"
-                dietary = gets.chomp
-            end
-        puts "Do you want to add a cook time? y/n?"
-        response_2 = gets.chomp
-            if /y\S*/ === response_2
-                puts "Please enter cook time"
-                cook_time = gets.chomp
-            end
-        puts "Do you want to add a link to the recipe? y/n?"
-        response_3 = gets.chomp
-            if /y\S*/ === response_3
-                puts "Please enter the full url link for this recipe"
-                link = gets.chomp
-            end
+    # def self.new_by_user
+    #     puts "What is the name of the Recipe?"
+    #     name = gets.chomp
+    #     puts "What are the ingredients? (Please enter as a comma separated list)"
+    #     ingredient_list = gets.chomp
+    #     puts "Do you want to add any dietary information? y/n?"
+    #     response = gets.chomp
+    #         if /y\S*/ === response
+    #             puts "Please enter dietary info"
+    #             dietary = gets.chomp
+    #         end
+    #     puts "Do you want to add a cook time? y/n?"
+    #     response_2 = gets.chomp
+    #         if /y\S*/ === response_2
+    #             puts "Please enter cook time"
+    #             cook_time = gets.chomp
+    #         end
+    #     puts "Do you want to add a link to the recipe? y/n?"
+    #     response_3 = gets.chomp
+    #         if /y\S*/ === response_3
+    #             puts "Please enter the full url link for this recipe"
+    #             link = gets.chomp
+    #         end
 
-        attributes = {label: name, ingredientLines: ingredient_list} 
-            if dietary
-                attributes[:healthLabels] = dietary
-            end
-            if cook_time 
-            attributes[:totalTime] = cook_time
-            end
-            if link
-            attributes[:url] = link
-            end
+    #     attributes = {label: name, ingredientLines: ingredient_list} 
+    #         if dietary
+    #             attributes[:healthLabels] = dietary
+    #         end
+    #         if cook_time 
+    #         attributes[:totalTime] = cook_time
+    #         end
+    #         if link
+    #         attributes[:url] = link
+    #         end
 
-        new_recipe = Recipe.new(attributes)
-        new_recipe.save
-        new_recipe
-    end
+    #     new_recipe = Recipe.new(attributes)
+    #     new_recipe.save
+    #     new_recipe
+    # end
 
 
 

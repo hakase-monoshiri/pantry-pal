@@ -47,6 +47,47 @@ class Controller
   end
 
 
+  
+  def new_recipe_by_user
+    puts "What is the name of the Recipe?"
+    name = gets.chomp
+    puts "What are the ingredients? (Please enter as a comma separated list)"
+    ingredient_list = gets.chomp
+    puts "Do you want to add any dietary information? y/n?"
+    response = gets.chomp
+        if /y\S*/ === response
+            puts "Please enter dietary info"
+            dietary = gets.chomp
+        end
+    puts "Do you want to add a cook time? y/n?"
+    response_2 = gets.chomp
+        if /y\S*/ === response_2
+            puts "Please enter cook time"
+            cook_time = gets.chomp
+        end
+    puts "Do you want to add a link to the recipe? y/n?"
+    response_3 = gets.chomp
+        if /y\S*/ === response_3
+            puts "Please enter the full url link for this recipe"
+            link = gets.chomp
+        end
+
+    attributes = {label: name, ingredientLines: ingredient_list} 
+        if dietary
+          attributes[:healthLabels] = dietary
+        end
+        if cook_time 
+          attributes[:totalTime] = cook_time
+        end
+        if link
+          attributes[:url] = link
+        end
+
+    new_recipe = Recipe.new(attributes)
+    new_recipe.save
+    new_recipe
+end
+
 
   def import_greeting
     self.importer = RecipeImporter.new(self)
@@ -101,6 +142,33 @@ class Controller
     end
   end
 
+  def change_name_by_user
+    puts "What should the pantry name be?"
+    pantry.name = gets.chomp
+    puts "the new name is #{pantry.name}"
+  end
+
+  def remove_ingredients_by_user
+    puts "What ingredients would you like to remove?"
+    puts "remove ingredients as a comma separated list"
+    input = gets.chomp.split(", ")
+    input.map  do |ingredient| 
+      removed_ingredient = pantry.remove_ingredient(ingredient)
+      if removed_ingredient
+        puts "#{removed_ingredient} has been removed"
+      else
+        puts "That item is not in your pantry!"
+      end
+    end
+  end
+
+  def add_ingredients_by_user
+    puts "What ingredients would you like to add?"
+    puts "(add ingredients as a comma separated list)"
+    input = gets.chomp
+    pantry.add(input.split(", "))
+  end
+
   def manage_pantry
     puts "------------------------------"
     puts "What would you like to do?"
@@ -113,16 +181,16 @@ class Controller
     input = gets.chomp
     case input
     when "1"
-      self.pantry.change_name_by_user
+      change_name_by_user
       manage_pantry
     when "2"
       self.pantry.list_ingredients
       manage_pantry
     when "3"
-      self.pantry.add_ingredients_by_user
+      add_ingredients_by_user
       manage_pantry
     when "4"
-      self.pantry.remove_ingredients_by_user
+      remove_ingredients_by_user
       manage_pantry
     when "5"
       switch_remove_pantry
@@ -135,7 +203,7 @@ class Controller
       manage_pantry
     end
   end
-
+  
   def manage_shopping_list
     puts "------------------------------"
     puts "What would you like to do with your shopping list?"
@@ -249,7 +317,7 @@ class Controller
     when /1\D*/
       recipe_search
     when /2\D*/
-      Recipe.new_by_user
+      new_recipe_by_user
     else 
       puts "that is not a valid selection."
     end
